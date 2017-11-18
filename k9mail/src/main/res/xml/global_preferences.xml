@@ -270,6 +270,22 @@
             android:positiveButtonText="@android:string/ok"
             android:negativeButtonText="@android:string/cancel" />
 
+        <ListPreference
+            android:persistent="false"
+            android:key="swipe_left_action"
+            android:title="@string/global_settings_swipe_left_action_label"
+            android:entries="@array/global_settings_swipe_action_entries"
+            android:entryValues="@array/global_settings_swipe_action_values"
+            android:dialogTitle="@string/global_settings_swipe_left_action_label" />
+
+        <ListPreference
+            android:persistent="false"
+            android:key="swipe_right_action"
+            android:title="@string/global_settings_swipe_right_action_label"
+            android:entries="@array/global_settings_swipe_action_entries"
+            android:entryValues="@array/global_settings_swipe_action_values"
+            android:dialogTitle="@string/global_settings_swipe_right_action_label" />
+
         <CheckBoxPreference
             android:persistent="false"
             android:key="messageview_return_to_list"

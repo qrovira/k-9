@@ -776,4 +776,16 @@
         <item>NEVER</item>
         <item>WHEN_IN_LANDSCAPE</item>
     </string-array>
+
+    <string-array name="global_settings_swipe_action_entries">
+        <item>@string/global_settings_swipe_action_select</item>
+        <item>@string/global_settings_swipe_action_delete</item>
+        <item>@string/global_settings_swipe_action_archive</item>
+    </string-array>
+
+    <string-array name="global_settings_swipe_action_values" translatable="false">
+        <item>SELECT</item>
+        <item>DELETE</item>
+        <item>ARCHIVE</item>
+    </string-array>
 </resources>

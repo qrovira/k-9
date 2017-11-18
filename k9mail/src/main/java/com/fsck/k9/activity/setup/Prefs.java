@@ -62,6 +62,8 @@ public class Prefs extends K9PreferenceActivity {
     private static final String PREFERENCE_ANIMATIONS = "animations";
     private static final String PREFERENCE_GESTURES = "gestures";
     private static final String PREFERENCE_VOLUME_NAVIGATION = "volume_navigation";
+    private static final String PREFERENCE_SWIPE_LEFT_ACTION = "swipe_left_action";
+    private static final String PREFERENCE_SWIPE_RIGHT_ACTION = "swipe_right_action";
     private static final String PREFERENCE_START_INTEGRATED_INBOX = "start_integrated_inbox";
     private static final String PREFERENCE_CONFIRM_ACTIONS = "confirm_actions";
     private static final String PREFERENCE_NOTIFICATION_HIDE_SUBJECT = "notification_hide_subject";
@@ -128,6 +130,8 @@ public class Prefs extends K9PreferenceActivity {
     private CheckBoxPreference mAnimations;
     private CheckBoxPreference mGestures;
     private CheckBoxListPreference mVolumeNavigation;
+    private ListPreference mSwipeLeftAction;
+    private ListPreference mSwipeRightAction;
     private CheckBoxPreference mStartIntegratedInbox;
     private CheckBoxListPreference mConfirmActions;
     private ListPreference mNotificationHideSubject;
@@ -222,6 +226,14 @@ public class Prefs extends K9PreferenceActivity {
         mVolumeNavigation = (CheckBoxListPreference)findPreference(PREFERENCE_VOLUME_NAVIGATION);
         mVolumeNavigation.setItems(new CharSequence[] {getString(R.string.volume_navigation_message), getString(R.string.volume_navigation_list)});
         mVolumeNavigation.setCheckedItems(new boolean[] {K9.useVolumeKeysForNavigationEnabled(), K9.useVolumeKeysForListNavigationEnabled()});
+
+        mSwipeLeftAction = (ListPreference)findPreference(PREFERENCE_SWIPE_LEFT_ACTION);
+        initListPreference(mSwipeLeftAction, K9.getSwipeLeftAction().name(),
+                mSwipeLeftAction.getEntries(), mSwipeLeftAction.getEntryValues());
+
+        mSwipeRightAction = (ListPreference)findPreference(PREFERENCE_SWIPE_RIGHT_ACTION);
+        initListPreference(mSwipeRightAction, K9.getSwipeRightAction().name(),
+                mSwipeRightAction.getEntries(), mSwipeRightAction.getEntryValues());
 
         mStartIntegratedInbox = (CheckBoxPreference)findPreference(PREFERENCE_START_INTEGRATED_INBOX);
         mStartIntegratedInbox.setChecked(K9.startIntegratedInbox());
@@ -494,6 +506,8 @@ public class Prefs extends K9PreferenceActivity {
         K9.setGesturesEnabled(mGestures.isChecked());
         K9.setUseVolumeKeysForNavigation(mVolumeNavigation.getCheckedItems()[0]);
         K9.setUseVolumeKeysForListNavigation(mVolumeNavigation.getCheckedItems()[1]);
+        K9.setSwipeLeftAction(K9.SwipeAction.valueOf(mSwipeLeftAction.getValue()));
+        K9.setSwipeRightAction(K9.SwipeAction.valueOf(mSwipeRightAction.getValue()));
         K9.setStartIntegratedInbox(!mHideSpecialAccounts.isChecked() && mStartIntegratedInbox.isChecked());
         K9.setNotificationHideSubject(NotificationHideSubject.valueOf(mNotificationHideSubject.getValue()));
 

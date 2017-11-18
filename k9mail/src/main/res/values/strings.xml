@@ -857,6 +857,12 @@ Please submit bug reports, contribute new features and ask questions at
     <string name="volume_navigation_message">In message views</string>
     <string name="volume_navigation_list">In list views</string>
 
+    <string name="global_settings_swipe_left_action_label">Swipe left action</string>
+    <string name="global_settings_swipe_right_action_label">Swipe right action</string>
+    <string name="global_settings_swipe_action_select">Select</string>
+    <string name="global_settings_swipe_action_delete">Delete</string>
+    <string name="global_settings_swipe_action_archive">Archive</string>
+
     <string name="start_integrated_inbox_title">Start in Unified Inbox</string>
 
     <string name="measure_accounts_title">Show account size</string>

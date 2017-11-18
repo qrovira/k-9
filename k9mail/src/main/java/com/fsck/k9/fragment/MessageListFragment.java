@@ -54,6 +54,7 @@ import com.fsck.k9.Account;
 import com.fsck.k9.Account.SortType;
 import com.fsck.k9.BuildConfig;
 import com.fsck.k9.K9;
+import com.fsck.k9.K9.SwipeAction;
 import com.fsck.k9.Preferences;
 import com.fsck.k9.R;
 import com.fsck.k9.activity.ActivityListener;
@@ -1243,12 +1244,12 @@ public class MessageListFragment extends Fragment implements OnItemClickListener
 
     public void onSwipeRightToLeft(final MotionEvent e1, final MotionEvent e2) {
         // Handle right-to-left as an un-select
-        handleSwipe(e1, false);
+        handleSwipe(e1, K9.getSwipeLeftAction());
     }
 
     public void onSwipeLeftToRight(final MotionEvent e1, final MotionEvent e2) {
         // Handle left-to-right as a select.
-        handleSwipe(e1, true);
+        handleSwipe(e1, K9.getSwipeRightAction());
     }
 
     /**
@@ -1256,10 +1257,10 @@ public class MessageListFragment extends Fragment implements OnItemClickListener
      *
      * @param downMotion
      *         Event that started the swipe
-     * @param selected
-     *         {@code true} if this was an attempt to select (i.e. left to right).
+     * @param action
+     *         Action to execute on swipe
      */
-    private void handleSwipe(final MotionEvent downMotion, final boolean selected) {
+    private void handleSwipe(final MotionEvent downMotion, final SwipeAction action) {
         int x = (int) downMotion.getRawX();
         int y = (int) downMotion.getRawY();
 
@@ -1275,8 +1276,34 @@ public class MessageListFragment extends Fragment implements OnItemClickListener
             int listY = y - listPosition[1];
 
             int listViewPosition = listView.pointToPosition(listX, listY);
+            int adapterPosition = listViewToAdapterPosition(listViewPosition);
 
-            toggleMessageSelect(listViewPosition);
+            if( adapterPosition == AdapterView.INVALID_POSITION ) {
+                return;
+            }
+
+            switch(action) {
+                case SELECT: {
+                    toggleMessageSelectWithAdapterPosition(adapterPosition);
+                    break;
+                }
+                case DELETE: {
+                    MessageReference message = getMessageAtPosition(adapterPosition);
+
+                    if( message != null ) {
+                        onDelete(message);
+                    }
+                    break;
+                }
+                case ARCHIVE: {
+                    MessageReference message = getMessageAtPosition(adapterPosition);
+
+                    if( message != null ) {
+                        onArchive(message);
+                    }
+                    break;
+                }
+            }
         }
     }
 

@@ -209,6 +209,16 @@ public class K9 extends Application {
         WHEN_IN_LANDSCAPE
     }
 
+    /**
+     * Controls the action connected to a swipe left/right on the MessageList.
+     */
+    public enum SwipeAction {
+        SELECT,
+        DELETE,
+        ARCHIVE
+    }
+
+
     private static boolean mMessageListCheckboxes = true;
     private static boolean mMessageListStars = true;
     private static int mMessageListPreviewLines = 2;
@@ -226,6 +236,8 @@ public class K9 extends Application {
     private static boolean mGesturesEnabled = true;
     private static boolean mUseVolumeKeysForNavigation = false;
     private static boolean mUseVolumeKeysForListNavigation = false;
+    private static SwipeAction mSwipeLeftAction = SwipeAction.SELECT;
+    private static SwipeAction mSwipeRightAction = SwipeAction.SELECT;
     private static boolean mStartIntegratedInbox = false;
     private static boolean mMeasureAccounts = true;
     private static boolean mCountSearchMessages = true;
@@ -453,6 +465,8 @@ public class K9 extends Application {
         editor.putBoolean("gesturesEnabled", mGesturesEnabled);
         editor.putBoolean("useVolumeKeysForNavigation", mUseVolumeKeysForNavigation);
         editor.putBoolean("useVolumeKeysForListNavigation", mUseVolumeKeysForListNavigation);
+        editor.putString("swipeLeftAction", mSwipeLeftAction.name());
+        editor.putString("swipeRightAction", mSwipeRightAction.name());
         editor.putBoolean("autofitWidth", mAutofitWidth);
         editor.putBoolean("quietTimeEnabled", mQuietTimeEnabled);
         editor.putBoolean("notificationDuringQuietTimeEnabled", mNotificationDuringQuietTimeEnabled);
@@ -686,6 +700,17 @@ public class K9 extends Application {
         mGesturesEnabled = storage.getBoolean("gesturesEnabled", false);
         mUseVolumeKeysForNavigation = storage.getBoolean("useVolumeKeysForNavigation", false);
         mUseVolumeKeysForListNavigation = storage.getBoolean("useVolumeKeysForListNavigation", false);
+
+        String swipeLeftAction = storage.getString("swipeLeftAction", null);
+        if (swipeLeftAction != null) {
+            mSwipeLeftAction = SwipeAction.valueOf(swipeLeftAction);
+        }
+
+        String swipeRightAction = storage.getString("swipeRightAction", null);
+        if (swipeRightAction != null) {
+            mSwipeRightAction = SwipeAction.valueOf(swipeRightAction);
+        }
+
         mStartIntegratedInbox = storage.getBoolean("startIntegratedInbox", false);
         mMeasureAccounts = storage.getBoolean("measureAccounts", true);
         mCountSearchMessages = storage.getBoolean("countSearchMessages", true);
@@ -950,6 +975,22 @@ public class K9 extends Application {
 
     public static void setUseVolumeKeysForListNavigation(boolean enabled) {
         mUseVolumeKeysForListNavigation = enabled;
+    }
+
+    public static synchronized SwipeAction getSwipeLeftAction() {
+        return mSwipeLeftAction;
+    }
+
+    public static synchronized void setSwipeLeftAction(SwipeAction action) {
+        mSwipeLeftAction = action;
+    }
+
+    public static synchronized SwipeAction getSwipeRightAction() {
+        return mSwipeRightAction;
+    }
+
+    public static synchronized void setSwipeRightAction(SwipeAction action) {
+        mSwipeRightAction = action;
     }
 
     public static boolean autofitWidth() {
