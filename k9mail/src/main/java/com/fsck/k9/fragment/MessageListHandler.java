@@ -129,8 +129,10 @@ public class MessageListHandler extends Handler {
                 break;
             }
             case ACTION_RESTORE_LIST_POSITION: {
-                fragment.listView.onRestoreInstanceState((Parcelable) msg.obj);
-                break;
+                throw new UnsupportedOperationException("Not restored yet");
+                //TODO restore
+//                fragment.recyclerView.onRestoreInstanceState((Parcelable) msg.obj);
+//                break;
             }
             case ACTION_OPEN_MESSAGE: {
                 MessageReference messageReference = (MessageReference) msg.obj;
